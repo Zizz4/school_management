@@ -8,16 +8,17 @@
         <field name="lantai_gedung">2</field>
     </record>
 
-    <record model="school.pelajaran" id="demo_pelajaran_mtk">
-        <field name="name">Matematika</field>
-    </record>
-
     <record model="res.users" id="demo_guru_1">
         <field name="name">Mr. JM</field>
         <field name="login">b</field>
         <field name="is_guru">1</field>
         <field name="gender">male</field>
         <field name="age">32</field>
+    </record>
+
+    <record model="school.pelajaran" id="demo_pelajaran_mtk">
+        <field name="name">Matematika</field>
+        <field name="guru_ids" eval="[(4, ref('school_management.demo_guru_1'))]"/>
     </record>
 
     <record model="school.kelas" id="demo_kelas_1">
@@ -39,8 +40,10 @@
         <field name="name">Pertemuan 1</field>
         <field name="day" eval="datetime.now()"/>
         <field name="state">undone</field>
+        <field name="guru_id" ref="school_management.demo_guru_1"/>
         <field name="pelajaran_id" ref="school_management.demo_pelajaran_mtk"/>
         <field name="kelas_id" ref="school_management.demo_kelas_1"/>
+        <field name="murid_ids" eval="[(4, ref('school_management.demo_murid_1'))]"/>
     </record>
 
 

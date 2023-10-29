@@ -51,9 +51,9 @@
                                     <th>NIS</th>
                                     <th>Nama</th>
                                 </thead>
-                                <t t-foreach="doc.murid_ids" t-as="o"/>
-                                <t t-set="nomor" t-value="1"/>
                                 <tbody>
+                                    <t t-foreach="doc.murid_ids" t-as="o"/>
+                                    <t t-set="nomor" t-value="1"/>
                                     <tr>
                                         <td>
                                             <t t-out="nomor"/>

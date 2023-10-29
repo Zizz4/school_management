@@ -18,14 +18,14 @@
                         <div class="oe_title">
                             <label for="name"/>
                             <h1>
-                                <field name="name" required="1" placeholder="Pertemuan 1"/>
+                                <field name="name" required="1" placeholder="Pertemuan 1" attrs="{'readonly': [('state','in',('ongoing','done'))]}"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="pelajaran_id" required="1"/>
-                                <field name="guru_id" widget="many2one_avatar_user"/>
-                                <field name="kelas_id" widget="many2one"/>
+                                <field name="pelajaran_id" required="1" attrs="{'readonly': [('state','in',('ongoing','done'))]}"/>
+                                <field name="guru_id" widget="many2one_avatar_user" attrs="{'readonly': [('state','in',('ongoing','done'))]}"/>
+                                <field name="kelas_id" widget="many2one" attrs="{'readonly': [('state','in',('done'))]}"/>
                             </group>
                             <group string="Tanggal">
                                 <field name="day" required="1"/>
