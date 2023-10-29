@@ -8,18 +8,40 @@
         <field name="lantai_gedung">2</field>
     </record>
 
+    <record model="school.pelajaran" id="demo_pelajaran_mtk">
+        <field name="name">Matematika</field>
+    </record>
+
     <record model="res.users" id="demo_guru_1">
         <field name="name">Mr. JM</field>
         <field name="login">b</field>
         <field name="is_guru">1</field>
         <field name="gender">male</field>
         <field name="age">32</field>
+        <field name="pelajaran_id" ref="school_management.demo_pelajaran_mtk"/>
     </record>
 
     <record model="school.kelas" id="demo_kelas_1">
         <field name="name">1</field>
         <field name="gedung_id" ref="school_management.demo_gedung_padjajaran"/>
         <field name="guru_id" ref="school_management.demo_guru_1"/>
+    </record>
+
+    <record model="res.partner" id="demo_murid_1">
+        <field name="name">Aziz</field>
+        <field name="is_murid">1</field>
+        <field name="nis">231132006</field>
+        <field name="age">18</field>
+        <field name="gender">male</field>
+        <field name="kelas_id" ref="school_management.demo_kelas_1"/>
+    </record>
+
+    <record model="school.absensi" id="demo_absensi_1">
+        <field name="name">Pertemuan 1</field>
+        <field name="day" eval="date.today()"/>
+        <field name="state">undone</field>
+        <field name="pelajaran_id" ref="school_management.demo_pelajaran_mtk"/>
+        <field name="kelas_id" ref="school_management.demo_kelas_1"/>
     </record>
 
 
