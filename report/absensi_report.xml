@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="report_school_absensi"
+                model="school.absensi"
+                string="Absensi"
+                name="school_management.report_school_absensi_view"
+                report_type="qweb-pdf"/>
+
+        <template id="report_school_absensi_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="text-align: center">
+                            <h5>Report Absensi</h5>
+                            <h4>
+                                <span t-field="doc.name"/>
+                                -
+                                <span t-field="doc.pelajaran_id"/>
+                            </h4>
+                            <div class="row mt-5 mb-5">
+                                <div class="col-auto" name="guru">
+                                    <strong>Pengajar:</strong>
+                                    <p t-field="doc.guru_id"/>
+                                </div>
+                                <div class="col-auto" name="kelas">
+                                    <strong>Kelas:</strong>
+                                    <p t-field="doc.kelas_id"/>
+                                </div>
+                                <div class="col-auto" name="tanggal">
+                                    <strong>Tanggal:</strong>
+                                    <p t-field="doc.day" t-options='{"format": "dd MMMM yyyy"}'/>
+                                </div>
+                                <div t-if="doc.date_start" class="col-auto" name="jam_dimulai">
+                                    <strong>Jam Dimulai:</strong>
+                                    <p t-field="doc.date_start"/>
+                                </div>
+                                <div t-if="doc.date_end" class="col-auto" name="jam_berakhir">
+                                    <strong>Jam Berakhir:</strong>
+                                    <p t-field="doc.date_end"/>
+                                </div>
+                            </div>
+                            <h6>
+                                Daftar Kehadiran
+                            </h6>
+                            <table class="table table-sm bordered mt-3">
+                                <thead>
+                                    <th>No</th>
+                                    <th>NIS</th>
+                                    <th>Nama</th>
+                                </thead>
+                                <t t-foreach="doc.murid_ids" t-as="o"/>
+                                <t t-set="nomor" t-value="1"/>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <t t-out="nomor"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.nis"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.name"/>
+                                        </td>
+                                        <t t-set="nomor" t-value="nomor + 1"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

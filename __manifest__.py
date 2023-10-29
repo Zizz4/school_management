@@ -17,7 +17,8 @@
         'views/murid.xml',
         'views/guru.xml',
         'views/pelajaran.xml',
-        'views/absensi.xml'
+        'views/absensi.xml',
+        'report/absensi_report.xml'
     ],
     'demo': [
         'demo/school_management_demo_data.xml'
