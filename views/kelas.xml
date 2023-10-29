@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="school_kelas_form_view" model="ir.ui.view">
+            <field name="name">school.kelas.form.view</field>
+            <field name="model">school.kelas</field>
+            <field name="arch" type="xml">
+                <form string="Kelas">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="gedung_id"/>
+                                <field name="guru_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="daftar_murid" string="Murid">
+                                <field name="murid_ids" nolabel="1" widget="one2many" mode="tree">
+                                    <tree edit="false" create="false" delete="true">
+                                        <field name="name"/>
+                                        <field name="age"/>
+                                        <field name="gender"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="school_kelas_tree_view" model="ir.ui.view">
+            <field name="name">school.kelas.tree.view</field>
+            <field name="model">school.kelas</field>
+            <field name="arch" type="xml">
+                <tree string="Kelas">
+                    <field name="name"/>
+                    <field name="guru_id"/>
+                    <field name="gedung_id"/>
+                    <field name="murid_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_kelas_search_view" model="ir.ui.view">
+            <field name="name">school.kelas.search.view</field>
+            <field name="model">school.kelas</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="school_kelas_act_window" model="ir.actions.act_window">
+            <field name="name">Kelas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">school.kelas</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Belum Ada Kelas
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Kelas" id="school_kelas_menu" parent="bangunan_menu" sequence="2"
+                  action="school_kelas_act_window"/>
+
+    </data>
+</odoo>

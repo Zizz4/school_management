@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_gedung_admin,school.gedung,model_school_gedung,school_management.group_school_management_admin,1,1,1,1
+access_school_kelas_admin,school.kelas,model_school_kelas,school_management.group_school_management_admin,1,1,1,1
+access_school_pelajaran_admin,school.pelajaran,model_school_pelajaran,school_management.group_school_management_admin,1,1,1,1
+access_school_absensi_admin,school.absensi,model_school_absensi,school_management.group_school_management_admin,1,1,1,1
+
+access_school_kelas_guru,school.kelas,model_school_kelas,school_management.group_school_management_guru,1,0,0,0
+access_school_pelajaran_guru,school.pelajaran,model_school_pelajaran,school_management.group_school_management_guru,1,1,1,0
+access_school_absensi_guru,school.pelajaran,model_school_absensi,school_management.group_school_management_guru,1,1,1,1
+access_school_murid_guru,res.partner,model_res_partner,school_management.group_school_management_guru,1,1,0,0

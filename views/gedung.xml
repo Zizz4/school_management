@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="school_gedung_form_view" model="ir.ui.view">
+            <field name="name">school.gedung.form.view</field>
+            <field name="model">school.gedung</field>
+            <field name="arch" type="xml">
+                <form string="Gedung Sekolah">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="warna_gedung" widget="color"/>
+                                <field name="lantai_gedung"/>
+                            </group>
+                            <group>
+                                <field name="panjang_gedung"/>
+                                <field name="lebar_gedung"/>
+                                <field name="luas_gedung" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="daftar_kelas" string="Kelas">
+                                <field name="kelas_ids" nolabel="1" widget="one2many" mode="tree">
+                                <tree create="false" edit="false">
+                                    <field name="name"/>
+                                    <field name="guru_id"/>
+                                </tree>
+                            </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="school_gedung_tree_view" model="ir.ui.view">
+            <field name="name">school.gedung.tree.view</field>
+            <field name="model">school.gedung</field>
+            <field name="arch" type="xml">
+                <tree string="Gedung Sekolah">
+                    <field name="name"/>
+                    <field name="warna_gedung" widget="color"/>
+                    <field name="lantai_gedung"/>
+                    <field name="kelas_ids" widget="many2many_tags"/>
+                    <field name="panjang_gedung" optional="hide"/>
+                    <field name="lebar_gedung" optional="hide"/>
+                    <field name="luas_gedung" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_gedung_search_view" model="ir.ui.view">
+            <field name="name">school.gedung.search.view</field>
+            <field name="model">school.gedung</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Gedung Bertingkat" name="lantai_gedung" domain="[('lantai_gedung', '>', 2)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="school_gedung_act_window" model="ir.actions.act_window">
+            <field name="name">Gedung Sekolah</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">school.gedung</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Belum Ada Gedung
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Gedung" id="school_gedung_menu" parent="bangunan_menu" sequence="1"
+                  action="school_gedung_act_window"/>
+
+    </data>
+</odoo>

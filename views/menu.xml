@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="school_management_root" name="School Management"
+                  web_icon="school_management,static/description/icon.svg" sequence="1"
+                  groups="school_management.group_school_management_guru"/>
+        <menuitem id="bangunan_menu" name="Bangunan" parent="school_management_root" sequence="2"
+                  groups="school_management.group_school_management_admin"/>
+        <menuitem id="warga_sekolah_menu" name="Warga Sekolah" parent="school_management_root" sequence="3"
+                  groups="school_management.group_school_management_guru"/>
+    </data>
+</odoo>

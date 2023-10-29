@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="school_absensi_form_view" model="ir.ui.view">
+            <field name="name">school.absensi.form.view</field>
+            <field name="model">school.absensi</field>
+            <field name="arch" type="xml">
+                <form string="Absensi Kehadiran">
+                    <header>
+                        <button name="action_mulai_kelas" type="object" string="Mulai Kelas" class="btn-primary"
+                                attrs="{'invisible': [('state','not in','undone')]}"/>
+                        <button name="action_akhiri_kelas" type="object" string="Akhiri Kelas" class="btn-primary"
+                                attrs="{'invisible': [('state','not in','ongoing')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" required="1" placeholder="Pertemuan 1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="pelajaran_id" required="1"/>
+                                <field name="guru_id" widget="many2one_avatar_user"/>
+                                <field name="kelas_id" widget="many2one"/>
+                            </group>
+                            <group string="Tanggal">
+                                <field name="day" required="1"/>
+                                <field name="date_start" readonly="1"/>
+                                <field name="date_end" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Daftar Hadir">
+                                <field name="murid_ids" nolabel="1">
+                                    <tree editable="top" edit="false">
+                                        <field name="name"/>
+                                        <field name="nis"/>
+                                        <field name="gender"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="school_absensi_tree_view" model="ir.ui.view">
+            <field name="name">schoool.absensi.tree.view</field>
+            <field name="model">school.absensi</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Kehadiran" expand="1 ">
+                    <field name="name"/>
+                    <field name="pelajaran_id"/>
+                    <field name="guru_id" widget="many2one_avatar_user"/>
+                    <field name="kelas_id"/>
+                    <field name="day"/>
+                    <field name="date_start" optional="hide"/>
+                    <field name="date_end" optional="hide"/>
+                    <field name="state" widget="badge" decoration-success="state == 'done'"
+                           decoration-info="state == 'ongoing'"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="school_absensi_search_view" model="ir.ui.view">
+            <field name="name">school.absensi.search.view</field>
+            <field name="model">school.absensi</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="pelajaran_id"/>
+                    <field name="day"/>
+                    <field name="kelas_id"/>
+                    <field name="pelajaran_id"/>
+                    <field name="state"/>
+                    <filter string="Sedang Berlangsung" name="filter_state_ongoing" domain="[('state','=','ongoing')]"/>
+                    <filter string="Selesai" name="filter_state_done" domain="[('state','=','done')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Kelas" name="group_by_kelas_id" domain="[]"
+                                context="{'group_by':'kelas_id'}"/>
+                        <filter string="Pelajaran" name="group_by_pelajaran_id" domain="[]"
+                                context="{'group_by':'pelajaran_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="school_absensi_act_window" model="ir.actions.act_window">
+            <field name="name">Absensi</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">school.absensi</field>
+            <field name="context">{'search_default_group_by_kelas_id': 1, 'search_default_group_by_pelajaran_id': 1 }</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Absensi" id="school_absensi_menu" parent="school_management_root" sequence="1"
+                  action="school_absensi_act_window"/>
+
+    </data>
+</odoo>

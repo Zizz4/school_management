@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="school.gedung" id="demo_gedung_padjajaran">
+        <field name="name">Padjajaran</field>
+        <field name="panjang_gedung">100</field>
+        <field name="lebar_gedung">50</field>
+        <field name="lantai_gedung">2</field>
+    </record>
+
+    <record model="res.users" id="demo_guru_1">
+        <field name="name">Mr. JM</field>
+        <field name="login">b</field>
+        <field name="is_guru">1</field>
+        <field name="gender">male</field>
+        <field name="age">32</field>
+    </record>
+
+    <record model="school.kelas" id="demo_kelas_1">
+        <field name="name">1</field>
+        <field name="gedung_id" ref="school_management.demo_gedung_padjajaran"/>
+        <field name="guru_id" ref="school_management.demo_guru_1"/>
+    </record>
+
+
+</odoo>

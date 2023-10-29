@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--View Form Untuk User di Setting-->
+        <record id="school_guru_form_setting_view" model="ir.ui.view">
+            <field name="name">school.guru.form.setting.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='preferences']" position="after">
+                    <page string="Biodata" name="biodata">
+                        <group>
+                            <group string="Biodata">
+                                <field name="is_guru" widget="checkbox"/>
+                                <field name="pelajaran_id" widget="many2many_tags"/>
+                                <field name="gender" widget="radio"/>
+                                <field name="age"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--View Form Untuk User di Menu Guru-->
+        <record id="school_guru_form_view" model="ir.ui.view">
+            <field name="name">school.guru.form.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_simple_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='phone_numbers']" position="after">
+                    <group name="bio_guru">
+                        <field name="pelajaran_id" widget="many2many_tags"/>
+                        <field name="age"/>
+                        <field name="gender" widget="radio"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="school_guru_kanban_view" model="ir.ui.view">
+            <field name="name">school.guru.kanban.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_res_users_kanban"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="age"/>
+                    <field name="gender"/>
+                </field>
+                <xpath expr="//div[@class='oe_kanban_details']/ul/li[last()]" position="after">
+                    <li t-if="record.gender">
+                        <field name="gender"/>,
+                        <field name="age"/>
+                    </li>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="school_guru_tree_view" model="ir.ui.view">
+            <field name="name">school.guru.tree.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+                <field name="login" position="before">
+                    <field name="age"/>
+                    <field name="gender" widget="badge"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="school_guru_search_view" model="ir.ui.view">
+            <field name="name">school.guru.search.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_share']" position="after">
+                    <separator/>
+                    <filter name="filter_age_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                    <filter name="filter_age_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                </xpath>
+                <xpath expr="//filter[@name='Inactive']" position="after">
+                    <group expand="0" string="Group By">
+                        <filter string="Gender" name="gender" domain="[]"
+                                context="{'group_by':'gender'}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="school_guru_act_window" model="ir.actions.act_window">
+            <field name="name">Guru</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_guru', '=', True)]</field>
+            <field name="context">{
+                'default_is_guru': True,
+                'default_gender': 'male'
+                }
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Belum Ada Guru
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="Guru" id="school_guru_menu" parent="warga_sekolah_menu" sequence="1"
+                  action="school_guru_act_window" groups="group_school_management_admin"/>
+
+    </data>
+</odoo>

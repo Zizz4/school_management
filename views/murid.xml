@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="school_murid_form_view" model="ir.ui.view">
+            <field name="name">school.murid.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='contact_addresses']" position="attributes">
+                    <attribute name="autofocus"></attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@name='contact_addresses']" position="before" autofocus="autofocus">
+                    <page name='school_management' string="School Management">
+                        <group>
+                            <field name="is_murid" widget="boolean_toggle"
+                                   groups="school_management.group_school_management_admin"/>
+                            <field name="nis" required="1"/>
+                            <field name="age"/>
+                            <field name="gender" widget="radio"/>
+                            <field name="kelas_id"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="school_murid_kanban_view" model="ir.ui.view">
+            <field name="name">school.murid.kanban.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="nis"/>
+                    <field name="age"/>
+                    <field name="gender"/>
+                </field>
+
+                <xpath expr="//li[@class='o_text_overflow']" position="after">
+                    <li>
+                        <field name="nis"/>
+                    </li>
+                    <li>
+                        <field name="age"/>
+                    </li>
+                    <li>
+                        <field name="gender"/>
+                    </li>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="school_murid_tree_view" model="ir.ui.view">
+            <field name="name">school.murid.tree.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="display_name" position="before">
+                    <field name="nis"/>
+                </field>
+                <field name="display_name" position="after">
+                    <field name="age"/>
+                    <field name="gender"/>
+                    <field name="kelas_id" widget="many2one"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="school_murid_search_view" model="ir.ui.view">
+            <field name="name">school.murid.search.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="gender"/>
+                    <field name="kelas_id"/>
+                    <field name="age"/>
+                </field>
+                <xpath expr="//filter[@name='type_company']" position="after">
+                    <separator/>
+                    <filter name="filter_age_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                    <filter name="filter_age_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                </xpath>
+                <xpath expr="//filter[@name='salesperson']" position="before">
+                    <filter string="Gender" name="gender" domain="[]"
+                            context="{'group_by':'gender'}"/>
+                    <filter string="Kelas" name="kelas_id" domain="[]"
+                            context="{'group_by':'kelas_id'}"/>
+                    <separator/>
+                </xpath>
+                <!--                <search>-->
+                <!--                    <field name="gender"/>-->
+                <!--                    <field name="kelas_id"/>-->
+                <!--                    <field name="age"/>-->
+
+                <!--                    <filter name="filter_age_male" string="Male" domain="[('gender', '=', 'male')]"/>-->
+                <!--                    <filter name="filter_age_female" string="Female" domain="[('gender', '=', 'female')]"/>-->
+
+                <!--                    <group expand="0" string="Group By">-->
+                <!--                        <filter string="Gender" name="gender" domain="[]"-->
+                <!--                                context="{'group_by':'gender'}"/>-->
+                <!--                        <filter string="Kelas" name="kelas_id" domain="[]"-->
+                <!--                                context="{'group_by':'kelas_id'}"/>-->
+                <!--                    </group>-->
+                <!--                </search>-->
+            </field>
+        </record>
+
+        <record id="school_murid_act_window" model="ir.actions.act_window">
+            <field name="name">Murid</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_murid', '=', True)]</field>
+            <field name="context">{'default_is_murid': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Belum Ada Murid
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="Murid" id="school_murid_menu" parent="warga_sekolah_menu" sequence="2"
+                  action="school_murid_act_window"/>
+
+    </data>
+</odoo>
