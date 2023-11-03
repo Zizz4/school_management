@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_school_absensi" model="ir.actions.report">
+        <field name="name">Absensi Kehadiran</field>
+        <field name="model">school.absensi</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.report_school_absensi</field>
+        <field name="report_file">school_management.report_school_absensi</field>
+        <field name="print_report_name">'%s - %s -%s' % (object.name, object.pelajaran_id.name, object.day.strftime('%d-%m-%Y'))</field>
+        <field name="binding_model_id" ref="model_school_absensi"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

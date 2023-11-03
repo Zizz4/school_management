@@ -17,17 +17,8 @@ class SchoolAbsensi(models.Model):
     guru_id = fields.Many2one(string='Guru', comodel_name='res.users', domain=[('is_guru', '=', True)], required=True,
                               default=lambda self: self.env.user)
 
-    # ambil data murid
-    def _ambil_data_murid(self):
-        for rec in self:
-            if rec.kelas_id:
-                data = self.env['res.users'].search(rec.murid_ids, 'in', rec.kelas_id.murid_ids.ids)
-                rec.write({'murid_ids': [(4, data)]})
-            else:
-                rec.murid_ids = False
-
-    murid_ids = fields.Many2many('res.partner', domain=[('is_murid', '=', True)], string="Murid",
-                                 default=_ambil_data_murid)
+    murid_ids = fields.Many2many('res.partner', domain="[('kelas_id', '=', kelas_id), ('is_murid', '=', True)]",
+                                 string="Murid")
 
     # Check apabila ada pertemuan dan pelajaran yang sama
     @api.model
@@ -35,7 +26,6 @@ class SchoolAbsensi(models.Model):
         pertemuan = vals.get('name')
         pelajaran = vals.get('pelajaran_id')
         kelas = vals.get('kelas_id')
-
         if pertemuan and pelajaran and kelas:
             existing_record = self.search([
                 ('name', '=', pertemuan),

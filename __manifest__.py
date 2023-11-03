@@ -18,7 +18,8 @@
         'views/guru.xml',
         'views/pelajaran.xml',
         'views/absensi.xml',
-        'report/absensi_report.xml'
+        'report/absensi_report.xml',
+        'report/ir_actions_report.xml',
     ],
     'demo': [
         'demo/school_management_demo_data.xml'

@@ -35,12 +35,12 @@
                         </group>
                         <notebook>
                             <page string="Daftar Hadir">
-                                <field name="murid_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}">
-                                    <tree editable="top" edit="false">
-                                        <field name="name"/>
-                                        <field name="nis"/>
-                                        <field name="gender"/>
-                                    </tree>
+                                <field name="murid_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}" widget="many2many_checkboxes">
+<!--                                    <tree editable="top" edit="false">-->
+<!--                                        <field name="name"/>-->
+<!--                                        <field name="nis"/>-->
+<!--                                        <field name="gender"/>-->
+<!--                                    </tree>-->
                                 </field>
                             </page>
                         </notebook>
