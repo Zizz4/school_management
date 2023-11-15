@@ -23,7 +23,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="pelajaran_id" required="1" attrs="{'readonly': [('state','in',('ongoing','done'))]}"/>
+                                <field name="pelajaran_id" required="1" attrs="{'readonly': [('state','in',('ongoing','done'))]}" options="{'no_quick_create': True, 'no_create_edit': True, 'no_open':True}"/>
                                 <field name="guru_id" widget="many2one_avatar_user" attrs="{'readonly': [('state','in',('ongoing','done'))]}"/>
                                 <field name="kelas_id" widget="many2one" attrs="{'readonly': [('state','in',('done'))]}"/>
                             </group>

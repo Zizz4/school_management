@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class SchoolAbsensi(models.Model):
     _name = 'school.absensi'
+    _rec_name = 'pelajaran_id' # ini untuk menunjukkan
 
     name = fields.Char(string="Pertemuan")
     day = fields.Date(string="Tanggal", required=True, default=date.today())
@@ -21,21 +22,31 @@ class SchoolAbsensi(models.Model):
                                  string="Murid")
 
     # Check apabila ada pertemuan dan pelajaran yang sama
-    @api.model
-    def create(self, vals):
-        pertemuan = vals.get('name')
-        pelajaran = vals.get('pelajaran_id')
-        kelas = vals.get('kelas_id')
-        if pertemuan and pelajaran and kelas:
-            existing_record = self.search([
-                ('name', '=', pertemuan),
-                ('pelajaran_id', '=', pelajaran),
-                ('kelas_id', '=', kelas),
-            ])
-
-            if existing_record:
-                raise UserError(_("Cannot create a record with the same name and pelajaran"))
-        return super(SchoolAbsensi, self).create(vals)
+    # update. lebih baik menggunakan constrains method.
+    @api.constrains('name', 'pelajaran', 'kelas')
+    def validate_absensi(self):
+        existing_record = self.search([
+            ('name', '=', self.name),
+            ('pelajaran_id', '=', self.pelajaran_id),
+            ('kelas_id', '=', self.kelas_id),
+        ])
+        if existing_record:
+            raise UserError(_("Cannot create a record with the same name, pelajaran and kelas"))
+    # @api.model
+    # def create(self, vals):
+    #     pertemuan = vals.get('name')
+    #     pelajaran = vals.get('pelajaran_id')
+    #     kelas = vals.get('kelas_id')
+    #     if pertemuan and pelajaran and kelas:
+    #         existing_record = self.search([
+    #             ('name', '=', pertemuan),
+    #             ('pelajaran_id', '=', pelajaran),
+    #             ('kelas_id', '=', kelas),
+    #         ])
+    #
+    #         if existing_record:
+    #             raise UserError(_("Cannot create a record with the same name and pelajaran"))
+    #     return super(SchoolAbsensi, self).create(vals)
 
     # Tampilkan Murid yang ada di kelas yang dipilih
     @api.onchange('kelas_id')
