@@ -4,7 +4,10 @@ from odoo.exceptions import UserError
 
 class SchoolAbsensi(models.Model):
     _name = 'school.absensi'
-    _rec_name = 'pelajaran_id' # ini untuk menunjukkan
+    # add chatter
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    # ini untuk menunjukkan breadcrumb
+    _rec_name = 'pelajaran_id'
 
     name = fields.Char(string="Pertemuan")
     day = fields.Date(string="Tanggal", required=True, default=date.today())
@@ -13,7 +16,7 @@ class SchoolAbsensi(models.Model):
     state = fields.Selection([('undone', 'Belum Dimulai'), ('ongoing', 'Sedang Berlangsung'), ('done', 'Selesai')],
                              'Status',
                              default='undone')
-    pelajaran_id = fields.Many2one(string='Pelajaran', comodel_name='school.pelajaran', required=True)
+    pelajaran_id = fields.Many2one(string='Pelajaran', comodel_name='school.pelajaran', required=True, tracking=True)   # tracking=True untuk melihat log terhadap field
     kelas_id = fields.Many2one(string='Kelas', comodel_name='school.kelas', required=True)
     guru_id = fields.Many2one(string='Guru', comodel_name='res.users', domain=[('is_guru', '=', True)], required=True,
                               default=lambda self: self.env.user)
